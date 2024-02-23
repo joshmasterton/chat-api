@@ -77,7 +77,8 @@ router.post(
       const jwtDecoded = await decodeToken(jwtToken);
       return res.json({
         token: jwtToken,
-        username: jwtDecoded.id,
+        username: jwtDecoded.username,
+        lastOnline: jwtDecoded.lastOnline,
       });
     } catch (err) {
       return res.json({ err: 'Signup error' });

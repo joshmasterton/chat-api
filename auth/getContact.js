@@ -14,7 +14,15 @@ router.get(
     // Query specific user required
     const users = await queryDatabase(`SELECT * FROM
     users WHERE username = $1`, [req.query.username]);
-    if (users[0]) return res.json(users);
+    const userSafe = await users.map((user) => ({
+      user_id: user.user_id,
+      username: user.username,
+      usernamelowercase: user.usernamelowercase,
+      created_on: user.created_on,
+      last_online: user.last_online,
+    }));
+
+    if (users[0]) return res.json(userSafe);
     return res.json({ err: 'No contact found' });
   },
 );

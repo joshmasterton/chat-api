@@ -12,7 +12,14 @@ router.get(
   verifyTokenMiddleware,
   async (req, res) => {
     const users = await queryDatabase('SELECT * FROM users');
-    if (users[0]) return res.json(users);
+    const usersSafe = await users.map((user) => ({
+      user_id: user.user_id,
+      username: user.username,
+      usernamelowercase: user.usernamelowercase,
+      created_on: user.created_on,
+      last_online: user.last_online,
+    }));
+    if (users[0]) return res.json(usersSafe);
     return res.json({ err: 'No users found' });
   },
 );

@@ -20,7 +20,8 @@ router.get(
     const checkDecoded = await decodeToken(checkToken);
     return res.json({
       token: checkToken,
-      username: checkDecoded.id,
+      username: checkDecoded.username,
+      lastOnline: checkDecoded.lastOnline,
     });
   },
 );

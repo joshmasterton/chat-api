@@ -62,7 +62,8 @@ router.post(
       const newDecoded = await decodeToken(newToken);
       return res.json({
         token: newToken,
-        username: newDecoded.id,
+        username: newDecoded.username,
+        lastOnline: newDecoded.lastOnline,
       });
     }
 

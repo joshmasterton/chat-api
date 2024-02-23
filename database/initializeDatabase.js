@@ -8,6 +8,7 @@ const initializeDatabase = async () => {
     // await queryDatabase('DROP TABLE IF EXISTS users');
     // await queryDatabase('DROP TABLE IF EXISTS chat_group');
     // await queryDatabase('DROP TABLE IF EXISTS chat');
+    // await queryDatabase('DROP TABLE IF EXISTS friends');
 
     // User table
     await queryDatabase(`CREATE TABLE IF NOT EXISTS users(
@@ -22,7 +23,10 @@ const initializeDatabase = async () => {
     await queryDatabase(`CREATE TABLE IF NOT EXISTS chat_group(
       chat_group_id SERIAL PRIMARY KEY,
       chat_group_name VARCHAR(250),
-      created_on TIMESTAMPTZ);`);
+      chat_group_privacy BOOLEAN,
+      chat_group_friend_one VARCHAR(250),
+      chat_group_friend_two VARCHAR(250),
+      chat_group_created_on TIMESTAMPTZ);`);
 
     // Chat table
     await queryDatabase(`CREATE TABLE IF NOT EXISTS chat(
@@ -35,8 +39,10 @@ const initializeDatabase = async () => {
     // Friends
     await queryDatabase(`CREATE TABLE IF NOT EXISTS friends(
       friends_id SERIAL PRIMARY KEY,
-      friend_one_id INT,
-      friend_two_id INT,
+      friend_one_username VARCHAR(250),
+      friend_two_username VARCHAR(250),
+      friend_one_accepted BOOLEAN,
+      friend_two_accepted BOOLEAN,
       created_on TIMESTAMPTZ);`);
 
     // Initialization successful

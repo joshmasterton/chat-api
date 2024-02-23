@@ -6,12 +6,16 @@ import signup from './auth/signup.js';
 import login from './auth/login.js';
 import checkUser from './auth/checkUser.js';
 import createChat from './chats/createChat.js';
+import createPublicChat from './chats/createPublicChat.js';
 import createMessage from './chats/createMessage.js';
 import getChats from './chats/getChats.js';
 import getChat from './chats/getChat.js';
 import getUsers from './auth/getUsers.js';
 import getMessages from './chats/getMessages.js';
 import getContact from './auth/getContact.js';
+import getFriendship from './friends/getFriendship.js';
+import createFriendship from './friends/createFriendship.js';
+import removeFriendship from './friends/removeFriendship.js';
 import initializeDatabase from './database/initializeDatabase.js';
 
 // Initialize env file dev/prod
@@ -50,8 +54,14 @@ app.use('/getContact', getContact);
 app.use('/getMessages', getMessages);
 app.use('/createMessage', createMessage);
 app.use('/createChat', createChat);
+app.use('/createPublicChat', createPublicChat);
 app.use('/getChats', getChats);
 app.use('/getChat', getChat);
+
+// Friends routes
+app.use('/createFriendship', createFriendship);
+app.use('/removeFriendship', removeFriendship);
+app.use('/getFriendship', getFriendship);
 
 // Custom error handler
 app.use((err, req, res, next) => {

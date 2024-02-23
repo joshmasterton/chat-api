@@ -14,7 +14,7 @@ const { JWT_SECRET } = process.env;
 // Generate a token from user
 export const generateToken = async (user) => {
   const token = jwt.sign(
-    { id: user.username },
+    { username: user.username, lastOnline: user.last_online },
     JWT_SECRET,
     { expiresIn: '8h' },
   );
@@ -33,12 +33,13 @@ export const verifyToken = async (token) => {
 
 // Verify token middleware
 export const verifyTokenMiddleware = async (req, res, next) => {
-  // Log bearerToken
+  // BearerToken
   const bearerToken = req.headers.authorization.split(' ')[1];
 
   // Is token legit
-  const checkToken = jwt.verify(bearerToken, JWT_SECRET, (err) => {
+  const checkToken = jwt.verify(bearerToken, JWT_SECRET, (err, decoded) => {
     if (err) return next(new Error('TokenError'));
+    req.user = decoded;
     return next();
   });
 

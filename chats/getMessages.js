@@ -16,7 +16,7 @@ router.post(
 
     // Is group chat existing
     const messages = await queryDatabase(`SELECT * FROM chat
-    WHERE chat_group_id = $1`, [chatGroupId]);
+      WHERE chat_group_id = $1`, [chatGroupId]);
     if (!messages[0]) {
       return res.json({ err: 'No messages found' });
     }
