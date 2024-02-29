@@ -26,13 +26,15 @@ router.post(
         chat_group_privacy,
         chat_group_friend_one,
         chat_group_friend_two,
-        chat_group_created_on
+        chat_group_created_on,
+        chat_group_last_message
       )
-      VALUES($1, $2, $3, $4, $5) RETURNING *;`, [
+      VALUES($1, $2, $3, $4, $5, $6) RETURNING *;`, [
       groupName,
       false,
       null,
       null,
+      new Date(Date.now()),
       new Date(Date.now()),
     ]);
 

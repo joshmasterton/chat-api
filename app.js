@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable import/extensions */
 import express from 'express';
 import dotenv from 'dotenv';
@@ -17,6 +18,7 @@ import getFriendship from './friends/getFriendship.js';
 import createFriendship from './friends/createFriendship.js';
 import removeFriendship from './friends/removeFriendship.js';
 import initializeDatabase from './database/initializeDatabase.js';
+import { initializeSocket, connectedIo } from './auth/socket.js';
 
 // Initialize env file dev/prod
 if (process.env.NODE_ENV === 'development') {
@@ -28,6 +30,7 @@ if (process.env.NODE_ENV === 'development') {
 // Initialize app variables
 const app = express();
 const { PORT, CLIENT_URL } = process.env;
+const { server, io } = initializeSocket(app);
 
 // Initialize cors
 app.use(cors({
@@ -41,6 +44,9 @@ app.use(express.urlencoded({ extended: false }));
 
 // Database initialization
 initializeDatabase();
+
+// Socket initialization
+connectedIo(io);
 
 // Routes
 // Auth routes
@@ -73,7 +79,7 @@ app.use((err, req, res, next) => {
 });
 
 // Listen to server
-app.listen(PORT, (err) => {
+server.listen(PORT, (err) => {
   if (err) return console.log(err.message);
   return console.log(`Running On Port: ${PORT}`);
 });

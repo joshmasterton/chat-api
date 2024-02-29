@@ -14,7 +14,7 @@ router.post(
     // Req variables
     const { chatGroupId } = req.body;
 
-    // Is group chat existing
+    // Get messages
     const messages = await queryDatabase(`SELECT * FROM chat
       WHERE chat_group_id = $1`, [chatGroupId]);
     if (!messages[0]) {

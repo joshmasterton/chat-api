@@ -36,7 +36,6 @@ const queryDatabase = async (query, values) => {
     await client.end();
 
     // Return response from query
-    console.log(query);
     return queryResponse.rows;
   } catch (err) {
     return console.log(err.message);

@@ -37,6 +37,7 @@ router.post(
     // Check if chat group exists in database
     const checkGroupExists = await queryDatabase(`SELECT * FROM chat_group
       WHERE chat_group_id = $1;`, [parseInt(chatGroupId, 10)]);
+
     // Return error if chat group doesnt exist
     if (!checkGroupExists[0]) {
       return res.json({ err: 'Chat group doesnt exist' });
@@ -52,6 +53,12 @@ router.post(
       new Date(Date.now()),
     ]);
 
+    // Update group table last message
+    await queryDatabase(`UPDATE chat_group
+      SET chat_group_last_message = $1
+      WHERE chat_group_id = $2`, [new Date(Date.now()), parseInt(chatGroupId, 10)]);
+
+    // Return success
     return res.json({ msg: 'Message sent' });
   },
 );
